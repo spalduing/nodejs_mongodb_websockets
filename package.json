@@ -1,0 +1,26 @@
+{
+  "name": "nodejs_mongodb_websockets",
+  "version": "0.1.0",
+  "description": "A telegram like chat, but better",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/spalduing/nodejs_mongodb_websockets.git"
+  },
+  "keywords": [
+    "chat",
+    "telegram"
+  ],
+  "author": "mdiazc",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/spalduing/nodejs_mongodb_websockets/issues"
+  },
+  "homepage": "https://github.com/spalduing/nodejs_mongodb_websockets#readme",
+  "dependencies": {
+    "express": "^4.18.1"
+  }
+}
