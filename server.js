@@ -18,6 +18,8 @@ router.post('/', function (req, res) {
   res.send('Hello from post');
 });
 router.get('/message', function (req, res) {
+  console.log(req.headers);
+  res.header({ 'custom-header': 'My custom header' });
   res.send('List of messages');
 });
 router.post('/message', function (req, res) {
