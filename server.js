@@ -13,6 +13,7 @@ const router = express.Router();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(router);
+app.use('/app', express.static('public'));
 
 router.get('/', function (req, res) {
   response.success(req, res, 'Hello from get');
