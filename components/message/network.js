@@ -5,10 +5,15 @@ const response = require('../../network/response');
 
 const router = express.Router();
 
-router.get('/', function (req, res) {
+router.get('/', async (req, res) => {
   console.log(req.headers);
   res.header({ 'custom-header': 'My custom header' });
-  response.success({ req, res, message: 'List of messages' });
+
+  try {
+    const messages = await controller.getMessages();
+
+    response.success({ req, res, message: messages });
+  } catch (error) {}
 });
 
 router.post('/', async (req, res) => {
