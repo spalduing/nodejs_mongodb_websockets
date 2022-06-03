@@ -30,7 +30,12 @@ router.post('/message', function (req, res) {
   //   console.log(req.body);
   //   console.log(req.query);
   if (req.query.error == 'ok') {
-    response.error({ req, res, message: 'Simulated error!' });
+    response.error({
+      req,
+      res,
+      message: 'Unexpected error!',
+      details: 'Its a Simulated error!',
+    });
   } else {
     response.success({
       req,
