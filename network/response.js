@@ -19,7 +19,7 @@ exports.error = function ({
   message = '',
   details = 'no details were provided about this error',
 }) {
-  console.log('[response_error]', details);
+  console.error('[response_error]', details);
   res.status(status).send({
     error: message,
     body: '',

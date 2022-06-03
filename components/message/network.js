@@ -1,5 +1,6 @@
 const express = require('express');
 
+const controller = require('./controller');
 const response = require('../../network/response');
 
 const router = express.Router();
@@ -10,20 +11,40 @@ router.get('/', function (req, res) {
   response.success({ req, res, message: 'List of messages' });
 });
 
-router.post('/', function (req, res) {
-  if (req.query.error == 'ok') {
-    response.error({
-      req,
-      res,
-      message: 'Unexpected error!',
-      details: 'Its a Simulated error!',
-    });
-  } else {
+router.post('/', async (req, res) => {
+  try {
+    if (req.query.error == 'ok') {
+      response.error({
+        req,
+        res,
+        message: 'Unexpected error!',
+        details: 'Its a Simulated error!',
+      });
+      return false;
+    }
+
+    const message = await controller.addMessage(
+      req.body.user,
+      req.body.message
+    );
+
     response.success({
       req,
       res,
-      message: `Message '${req.body.message}'successfuly added `,
+      status: 201,
+      message,
     });
+  } catch (error) {
+    const [message, details] = error;
+
+    response.error({
+      req,
+      res,
+      message,
+      details,
+    });
+
+    return false;
   }
 });
 
