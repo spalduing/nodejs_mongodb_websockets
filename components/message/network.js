@@ -68,4 +68,15 @@ router.put('/:id', async (req, res) => {
   }
 });
 
+router.delete('/:id', async (req, res) => {
+  try {
+    const message = await controller.deleteMessage(req.params.id);
+    response.success({ req, res, message });
+  } catch (error) {
+    const [message, details] = error;
+
+    response.error({ req, res, message, details });
+  }
+});
+
 module.exports = router;

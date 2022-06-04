@@ -44,8 +44,24 @@ function updateMesages(id, message) {
   });
 }
 
+function deleteMessage(id) {
+  return new Promise(async (resolve, reject) => {
+    if (!id) {
+      console.log(id);
+      reject([
+        'Incorrect data',
+        '[message_controller: deleteMessage] No "id" argument ',
+      ]);
+      return false;
+    }
+
+    const deletedMessage = await store.remove(id);
+    resolve(`'${deletedMessage._id}' succesfully deleted!`);
+  });
+}
 module.exports = {
   addMessage,
   getMessages,
   updateMesages,
+  deleteMessage,
 };

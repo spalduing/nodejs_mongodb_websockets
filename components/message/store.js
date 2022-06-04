@@ -34,10 +34,15 @@ async function updateMesages(id, message) {
   return updatedMessage;
 }
 
+async function deleteMessage(id) {
+  const myMessage = await Model.findByIdAndDelete(id);
+  return myMessage;
+}
+
 module.exports = {
   add: addMessage,
   list: getMessages,
   //   get,
   update: updateMesages,
-  //   delete,
+  remove: deleteMessage,
 };
