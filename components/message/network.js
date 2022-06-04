@@ -6,11 +6,11 @@ const response = require('../../network/response');
 const router = express.Router();
 
 router.get('/', async (req, res) => {
-  console.log(req.headers);
-  res.header({ 'custom-header': 'My custom header' });
+  // res.header({ 'custom-header': 'My custom header' });
 
   try {
-    const messages = await controller.getMessages();
+    const filterUser = req.query.user || null;
+    const messages = await controller.getMessages(filterUser);
 
     response.success({ req, res, message: messages });
   } catch (error) {}

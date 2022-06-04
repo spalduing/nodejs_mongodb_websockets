@@ -1,5 +1,11 @@
 const store = require('./store');
 
+function getMessages(filterUser) {
+  return new Promise((resolve, reject) => {
+    resolve(store.list(filterUser));
+  });
+}
+
 function addMessage(user, message) {
   return new Promise((resolve, reject) => {
     if (!user || !message) {
@@ -18,12 +24,6 @@ function addMessage(user, message) {
     store.add(fullMessage);
 
     resolve(fullMessage);
-  });
-}
-
-function getMessages() {
-  return new Promise((resolve, reject) => {
-    resolve(store.list());
   });
 }
 

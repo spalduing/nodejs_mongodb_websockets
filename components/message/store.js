@@ -10,18 +10,19 @@ const uri = `mongodb+srv://${config.user}:${config.pasword}@cluster0.nxuer.mongo
 db.connect(uri, { useNewUrlParser: true });
 console.log('[DB] Successfully conected');
 
-// const messages = [];
+async function getMessages(filterUser) {
+  let filter = {};
+  if (filterUser !== null) {
+    filter = { user: filterUser };
+  }
 
-async function addMessage(message) {
-  //   messages.push(message);
-  const myMessage = new Model(message);
-  await myMessage.save();
+  const messages = await Model.find(filter);
+  return messages;
 }
 
-async function getMessages() {
-  //   return messages;
-  const messages = await Model.find();
-  return messages;
+async function addMessage(message) {
+  const myMessage = new Model(message);
+  await myMessage.save();
 }
 
 async function updateMesages(id, message) {
