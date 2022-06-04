@@ -1,14 +1,4 @@
-const db = require('mongoose');
-
 const Model = require('./model');
-
-const config = require('../../network/config');
-
-db.Promise = global.Promise;
-const uri = `mongodb+srv://${config.user}:${config.pasword}@cluster0.nxuer.mongodb.net/${config.db_name}`;
-
-db.connect(uri, { useNewUrlParser: true });
-console.log('[DB] Successfully conected');
 
 async function getMessages(filterUser) {
   let filter = {};

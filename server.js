@@ -1,8 +1,13 @@
 const express = require('express');
 
+const db = require('./db');
 const routes = require('./network/routes');
+const config = require('./network/config');
 
 const server = express();
+
+const uri = `mongodb+srv://${config.user}:${config.pasword}@cluster0.nxuer.mongodb.net/${config.db_name}`;
+db(uri);
 
 routes(server);
 
