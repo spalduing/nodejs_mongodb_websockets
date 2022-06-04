@@ -1,8 +1,10 @@
 const store = require('./store');
 
 function getMessages(filterUser) {
-  return new Promise((resolve, reject) => {
-    resolve(store.list(filterUser));
+  return new Promise(async (resolve, reject) => {
+    const messages = await store.list(filterUser);
+
+    resolve(messages);
   });
 }
 
