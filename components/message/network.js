@@ -53,4 +53,19 @@ router.post('/', async (req, res) => {
   }
 });
 
+router.put('/:id', async (req, res) => {
+  try {
+    const message = await controller.updateMesages(
+      req.params.id,
+      req.body.message
+    );
+
+    response.success({ req, res, message });
+  } catch (error) {
+    const [message, details] = error;
+
+    response.error({ req, res, message, details });
+  }
+});
+
 module.exports = router;

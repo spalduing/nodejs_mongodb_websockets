@@ -27,7 +27,25 @@ function getMessages() {
   });
 }
 
+function updateMesages(id, message) {
+  return new Promise(async (resolve, reject) => {
+    if (!id || !message) {
+      reject([
+        'Incorrect data',
+        '[message_controller: updateMessage] No "id" or "message" arguments ',
+      ]);
+
+      return false;
+    }
+
+    const updatedMessage = await store.update(id, message);
+
+    resolve(updatedMessage);
+  });
+}
+
 module.exports = {
   addMessage,
   getMessages,
+  updateMesages,
 };
