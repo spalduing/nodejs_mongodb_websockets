@@ -1,8 +1,10 @@
 const store = require('./store');
+const socket = require('../../socket').socket;
 
 function getMessages(messageFilter) {
   return new Promise(async (resolve, reject) => {
     const messages = await store.list(messageFilter);
+    socket.io.emit('message', messages);
 
     resolve(messages);
   });
