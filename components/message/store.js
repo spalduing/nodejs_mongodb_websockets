@@ -1,10 +1,13 @@
 const Model = require('./model');
 
-async function getMessages(filterUser) {
+async function getMessages(messageFilter) {
   return new Promise(async (resolve, reject) => {
     let filter = {};
-    if (filterUser !== null) {
-      filter = { user: filterUser };
+    if (messageFilter !== null) {
+      filter =
+        messageFilter.user !== null
+          ? { user: messageFilter.user }
+          : { chat: messageFilter.chat };
     }
     Model.find(filter)
       .populate('user')
@@ -12,7 +15,6 @@ async function getMessages(filterUser) {
         if (error) {
           reject(['Server error', error]);
         }
-        console.log('messages', populated);
         resolve(populated);
       });
   });
@@ -20,14 +22,17 @@ async function getMessages(filterUser) {
 
 async function addMessage(message) {
   const myMessage = new Model(message);
-  await myMessage.save();
+  const addedMessage = await myMessage.save();
+  return addedMessage;
 }
 
-async function updateMesages(id, message) {
-  const myMessage = await Model.findById(id);
-  myMessage.message = message;
+async function updateMesages(id, messageFilter) {
+  let filter = {};
+  if (messageFilter !== null) {
+    filter = messageFilter;
+  }
 
-  const updatedMessage = await myMessage.save();
+  const updatedMessage = await Model.findByIdAndUpdate(id, filter);
 
   return updatedMessage;
 }

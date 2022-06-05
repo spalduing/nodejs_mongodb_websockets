@@ -1,16 +1,16 @@
 const store = require('./store');
 
-function getMessages(filterUser) {
+function getMessages(messageFilter) {
   return new Promise(async (resolve, reject) => {
-    const messages = await store.list(filterUser);
+    const messages = await store.list(messageFilter);
 
     resolve(messages);
   });
 }
 
-function addMessage(user, message) {
+function addMessage(message) {
   return new Promise((resolve, reject) => {
-    if (!user || !message) {
+    if (!message) {
       reject([
         'Incorrect data',
         '[message_controller: addMessage] No "user" or "message" arguments ',
@@ -18,8 +18,7 @@ function addMessage(user, message) {
       return false;
     }
     const fullMessage = {
-      user,
-      message,
+      ...message,
       date: new Date(),
     };
 

@@ -9,32 +9,25 @@ router.get('/', async (req, res) => {
   // res.header({ 'custom-header': 'My custom header' });
 
   try {
-    const filterUser = req.query.user || null;
-    const messages = await controller.getMessages(filterUser);
+    const messageFilter = {
+      user: req.query.user || null,
+      chat: req.query.chat || null,
+    };
+    const message = await controller.getMessages(messageFilter);
 
-    response.success({ req, res, message: messages });
-  } catch (error) {}
+    response.success({ req, res, message });
+  } catch (error) {
+    const [message, details] = error;
+
+    response.error({ res, message, details });
+  }
 });
 
 router.post('/', async (req, res) => {
   try {
-    if (req.query.error == 'ok') {
-      response.error({
-        req,
-        res,
-        message: 'Unexpected error!',
-        details: 'Its a Simulated error!',
-      });
-      return false;
-    }
-
-    const message = await controller.addMessage(
-      req.body.user,
-      req.body.message
-    );
+    const message = await controller.addMessage(req.body);
 
     response.success({
-      req,
       res,
       status: 201,
       message,
@@ -43,7 +36,6 @@ router.post('/', async (req, res) => {
     const [message, details] = error;
 
     response.error({
-      req,
       res,
       message,
       details,
@@ -55,10 +47,7 @@ router.post('/', async (req, res) => {
 
 router.put('/:id', async (req, res) => {
   try {
-    const message = await controller.updateMesages(
-      req.params.id,
-      req.body.message
-    );
+    const message = await controller.updateMesages(req.params.id, req.body);
 
     response.success({ req, res, message });
   } catch (error) {
