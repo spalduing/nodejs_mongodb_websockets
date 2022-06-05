@@ -29,7 +29,7 @@ router.post('/', async (req, res) => {
 
 router.put('/:id', async (req, res) => {
   try {
-    const message = await controller.updateUser(req.params.id);
+    const message = await controller.updateUser(req.params.id, req.body);
     response.success({ res, message });
     res;
   } catch (error) {

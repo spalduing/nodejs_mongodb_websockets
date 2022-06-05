@@ -15,15 +15,13 @@ async function addUser(user) {
 }
 
 async function updateUser(id, userFilter) {
-  const myUser = await Model.findById(id);
-  const filter = {};
+  let filter = {};
   if (userFilter !== null) {
     filter = userFilter;
   }
+  const updatedUser = await Model.findByIdAndUpdate(id, filter);
 
-  await myUser.update(filter);
-
-  return myUser;
+  return updatedUser;
 }
 
 async function deleteUser(id) {
