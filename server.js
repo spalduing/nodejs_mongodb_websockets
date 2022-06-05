@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors');
 
 const db = require('./db');
 const routes = require('./network/routes');
@@ -9,6 +10,7 @@ const uri = `mongodb+srv://${config.user}:${config.pasword}@cluster0.nxuer.mongo
 db(uri);
 
 const app = express();
+app.use(cors());
 routes(app);
 
 const server = require('http').Server(app);
