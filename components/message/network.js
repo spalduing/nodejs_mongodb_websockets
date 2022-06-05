@@ -4,7 +4,7 @@ const multer = require('multer');
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, './uploads');
+    cb(null, './public/files');
   },
   filename: function (req, file, cb) {
     cb(null, file.originalname);
@@ -16,6 +16,7 @@ const response = require('../../network/response');
 
 const router = express.Router();
 const upload = multer({ storage });
+// const upload = multer({ dest: './public/files' });
 
 router.get('/', async (req, res) => {
   // res.header({ 'custom-header': 'My custom header' });
@@ -35,10 +36,10 @@ router.get('/', async (req, res) => {
   }
 });
 
-// router.post('/', upload.single('file'), async (req, res) => {
-router.post('/', async (req, res) => {
+router.post('/', upload.single('file'), async (req, res) => {
+  // router.post('/', async (req, res) => {
   try {
-    const message = await controller.addMessage(req.body);
+    const message = await controller.addMessage(req.body, req.file);
 
     response.success({
       res,

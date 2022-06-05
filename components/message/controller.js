@@ -8,7 +8,7 @@ function getMessages(messageFilter) {
   });
 }
 
-function addMessage(message) {
+function addMessage(message, file) {
   return new Promise((resolve, reject) => {
     if (!message) {
       reject([
@@ -17,10 +17,16 @@ function addMessage(message) {
       ]);
       return false;
     }
+
     const fullMessage = {
       ...message,
       date: new Date(),
     };
+
+    if (file) {
+      const fileUrl = `http://localhost:3000/server/public/files/${file.filename}`;
+      fullMessage.file = fileUrl;
+    }
 
     store.add(fullMessage);
 

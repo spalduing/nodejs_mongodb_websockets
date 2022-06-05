@@ -4,10 +4,14 @@ async function getMessages(messageFilter) {
   return new Promise(async (resolve, reject) => {
     let filter = {};
     if (messageFilter !== null) {
-      filter =
+      const noQueryParams =
+        messageFilter.user == null && messageFilter.chat == null;
+
+      const filterToApply =
         messageFilter.user !== null
           ? { user: messageFilter.user }
           : { chat: messageFilter.chat };
+      filter = noQueryParams ? {} : filterToApply;
     }
     Model.find(filter)
       .populate('user')
